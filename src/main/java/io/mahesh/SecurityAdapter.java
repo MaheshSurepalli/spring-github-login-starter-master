@@ -1,4 +1,4 @@
-package io.javabrains;
+package io.mahesh;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
