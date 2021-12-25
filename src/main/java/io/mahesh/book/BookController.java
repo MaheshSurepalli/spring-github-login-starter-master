@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class BookController {
+    private final String URL_PREFIX="https://covers.openlibrary.org/b/id/";
     @Autowired
     BookRepository bookRepository;
     @GetMapping(value = "/books/{bookId}")
@@ -17,6 +18,12 @@ public class BookController {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
         if(optionalBook.isPresent()){
             Book book = optionalBook.get();
+            String coverImgUrl="/images/noimg.npg";
+            if(book.getCoverIds()!=null && book.getCoverIds().size()>0)
+            {
+                coverImgUrl=URL_PREFIX+book.getCoverIds().get(0)+"-L.jpg";
+            }
+            model.addAttribute("coverImage", coverImgUrl);
             model.addAttribute("book", book);
             return "book";
         }
