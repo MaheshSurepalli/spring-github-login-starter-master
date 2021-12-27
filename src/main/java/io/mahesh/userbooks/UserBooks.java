@@ -24,19 +24,12 @@ public class UserBooks {
     @PrimaryKey
     private UserBooksPrimaryKey key;
 
-    @Id
-    @PrimaryKeyColumn(value = "user_id",ordinal = 0,type=PrimaryKeyType.PARTITIONED)
-    private String userId;
-    @Id
-    @PrimaryKeyColumn(value = "book_id",ordinal = 1,type=PrimaryKeyType.PARTITIONED)
-    private String bookId;
-
     @Column("started_date")
     @CassandraType(type = Name.DATE)
     private LocalDate startedDate;
 
     @Column("completed_date")
-    @CassandraType(type = Name.DATE)
+    @CassandraType(type = Name.DATE) 
     private LocalDate completedDate;
 
     @Column("reading_status")

@@ -16,10 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserBooksPrimaryKey {
-    @Id
     @PrimaryKeyColumn(value = "user_id",ordinal = 0,type=PrimaryKeyType.PARTITIONED)
     private String userId;
-    @Id
     @PrimaryKeyColumn(value = "book_id",ordinal = 1,type=PrimaryKeyType.PARTITIONED)
     private String bookId;
     
