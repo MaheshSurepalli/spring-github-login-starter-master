@@ -1,9 +1,7 @@
 package io.mahesh.home;
 
 import java.util.List;
-
-import com.nimbusds.openid.connect.sdk.federation.policy.language.BooleanOperation;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
@@ -29,16 +27,16 @@ public class HomeController {
 
         Slice<BooksByUser> bookSlice = booksByUserRepository.findAllById(userId, CassandraPageRequest.of(0,100));
         List<BooksByUser> booksByUser=bookSlice.getContent();
-        booksByUser.stream().map(book->
+        booksByUser = booksByUser.stream().distinct().map(book->
         {
             String coverImgUrl="/images/noimg.jpg";
             if(book.getCoverIds()!=null && book.getCoverIds().size()>0)
             {
-                coverImgUrl=(URL_PREFIX+book.getCoverIds().get(0)+"-L.jpg");
+                coverImgUrl=URL_PREFIX+book.getCoverIds().get(0)+"-L.jpg";
             }
             book.setCoverUrl(coverImgUrl);
             return book;
-        });
+        }).collect(Collectors.toList());
         model.addAttribute("booksByUser", booksByUser);
         return "home";
         
